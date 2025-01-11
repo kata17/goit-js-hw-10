@@ -3,6 +3,8 @@ import 'flatpickr/dist/flatpickr.min.css';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
+// Оголошуємо змінні для елементів DOM
+
 const btnStart = document.querySelector('button[data-start]');
 const input = document.querySelector('#datetime-picker');
 const day = document.querySelector('span[data-days]');
@@ -77,3 +79,32 @@ function startTimer() {
     }
   }, 1000);
 }
+
+// Оголошуємо змінні для елементів DOM
+const datetimePicker = document.querySelector('#datetime-picker');
+const startButton = document.querySelector('#start-btn');
+const timerFields = document.querySelectorAll('.field .value');
+
+let userSelectedDate = null;
+let timerInterval = null;
+
+// Ініціалізація flatpickr
+flatpickr(datetimePicker, {
+  enableTime: true,
+  time_24hr: true,
+  defaultDate: new Date(),
+  minuteIncrement: 1,
+  onClose(selectedDates) {
+    userSelectedDate = selectedDates[0];
+
+    if (userSelectedDate < new Date()) {
+      iziToast.error({
+        title: 'Error',
+        message: 'Please choose a date in the future',
+      });
+      startButton.disabled = true; // Кнопка неактивна, якщо дата в минулому
+    } else {
+      startButton.disabled = false; // Кнопка активується, якщо дата в майбутньому
+    }
+  },
+});
