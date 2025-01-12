@@ -79,8 +79,3 @@ input:active {
   flex-direction: column;
   align-items: center;
 }
-
-.value {
-  font-size: 2rem;
-  display: block;
-}
